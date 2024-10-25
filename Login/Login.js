@@ -18,6 +18,7 @@ loginForm.addEventListener("submit", async (event) => {
     const userData = { email, password };
     try {
         const user = await loginUser(userData);
+        console.log(user);
         if (user) {
             const userCredentials = {
                 userId: `${user.user._id}`,

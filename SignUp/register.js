@@ -12,12 +12,11 @@ registerForm.addEventListener("submit", async (event) => {
         alert("All fields are required");
         return;
     }
-
     let fileUrl = await uploadImageToCloudinary(avatarImage);
     const userData = { email, password, fullName, fileUrl };
-
     try {
         const user = await registerUser(userData);
+        console.log(user);
         if (user) {
             const userCredentials = {
                 userId: `${user.createdUser._id}`,
