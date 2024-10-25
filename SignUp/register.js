@@ -18,8 +18,6 @@ registerForm.addEventListener("submit", async (event) => {
 
     try {
         const user = await registerUser(userData);
-        console.log("User response:", user); 
-
         if (user) {
             const userCredentials = {
                 userId: `${user.createdUser._id}`,
@@ -66,9 +64,9 @@ async function registerUser(userData) {
             body: JSON.stringify(userData)
         });
         const data = await response.json();
-        if (!data.userLoggedIn) {
+        if (!data.userCreated) {
             alert(data.message);
-            return;
+            return
         }
         return data;
     } catch (error) {
