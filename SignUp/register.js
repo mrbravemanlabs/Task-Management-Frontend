@@ -23,7 +23,7 @@ registerForm.addEventListener("submit", async (event) => {
                 isUserLoggedIn: true
             };
             localStorage.setItem("taskManager", JSON.stringify(userCredentials));
-            window.location.replace("../Task Manager/taskManager.html");
+            window.location.replace("../TaskManager/taskManager.html");
         } else {
             alert("Registration failed. Please check your credentials.");
         }
