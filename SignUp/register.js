@@ -12,45 +12,68 @@ registerForm.addEventListener("submit", async (event) => {
         alert("All fields are required");
         return;
     }
-    let fileUrl = await uploadImageToCloudinary(avatarImage);
-    const userData = { email, password, fullName, fileUrl };
+
+    // Wait for the image upload to complete
+    let imageUploadResult = await uploadImageToCloudinary(avatarImage);
+    if (!imageUploadResult) {
+        alert("Image upload failed.");
+        return; // Exit if the image upload fails
+    }
+
+    const userData = {
+        email,
+        password,
+        fullName,
+        fileUrl: imageUploadResult.imageUrl // Access the imageUrl from the upload result
+    };
+
     try {
         const user = await registerUser(userData);
         if (user) {
             console.log(user);
             const userCredentials = {
-                userId: `${user.createdUser._id}`,
+                userId: user.createdUser._id, // Use _id directly, no need for string interpolation
                 isUserLoggedIn: true
             };
             localStorage.setItem("taskManager", JSON.stringify(userCredentials));
-            window.location.replace("../Login/Login.html");
+            window.location.replace("../Login/Login.html"); // Redirect to the login page
         } else {
             alert("Registration failed. Please check your credentials.");
         }
     } catch (error) {
+        console.error("Error during registration:", error); // Log the error for debugging
         alert("Error during registration. Please try again.");
     }
     registerForm.reset();
 });
+
 async function uploadImageToCloudinary(file) {
     const url = `https://api.cloudinary.com/v1_1/diyhkjyn2/upload`;
     const uploadPreset = "ml_default";
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", uploadPreset);
+    
     try {
         const response = await fetch(url, {
             method: "POST",
             body: formData
         });
         const data = await response.json();
+        
+        // Check if the response has the secure_url
+        if (!data.secure_url) {
+            alert("Image upload failed. Please try again.");
+            return null; // Return null if upload failed
+        }
+        
         return { imageUrl: data.secure_url, imagePublicId: data.public_id };
     } catch (error) {
+        console.error("Error uploading image:", error); // Log the error for debugging
         alert("Error uploading image. Please try again.");
         return null;
     }
 }
-
 
 const apiUrl = "https://task-management-api-uaxo.onrender.com/api/v1/users/registerUser";
 async function registerUser(userData) {
@@ -62,14 +85,17 @@ async function registerUser(userData) {
             },
             body: JSON.stringify(userData)
         });
+        
         const data = await response.json();
+        
         if (!data.userCreated) {
-            alert(data.message);
-            return
+            alert(data.message); // Show alert if user was not created
+            return null; // Return null to indicate failure
         }
-        return data;
+        return data; // Return the user data if created successfully
     } catch (error) {
+        console.error("Fetch error:", error); // Log the error for debugging
         alert("Fetch error. Please try again.");
-        return null;
+        return null; // Return null to indicate failure
     }
 }
