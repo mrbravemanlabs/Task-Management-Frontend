@@ -18,16 +18,14 @@ registerForm.addEventListener("submit", async (event) => {
 
     try {
         const user = await registerUser(userData);
-        console.log("User response:", user); // Log the user response
+        console.log("User response:", user); 
 
         if (user) {
             const userCredentials = {
                 userId: `${user.createdUser._id}`,
                 isUserLoggedIn: true
             };
-            console.log("Saving to localStorage:", userCredentials);
             localStorage.setItem("taskManager", JSON.stringify(userCredentials));
-            console.log("Redirecting to task manager...");
             window.location.replace("../Task Manager/taskManager.html");
         } else {
             alert("Registration failed. Please check your credentials.");
@@ -68,14 +66,12 @@ async function registerUser(userData) {
             body: JSON.stringify(userData)
         });
         const data = await response.json();
-        console.log("Response data:", data); // Log the response data
-        if (!data.userCreated) {
+        if (!data.userLoggedIn) {
             alert(data.message);
-            return null; // Return null if user not created
+            return;
         }
-        return data; // Return the user data
+        return data;
     } catch (error) {
-        console.error("Fetch error:", error); // Log fetch error
         alert("Fetch error. Please try again.");
         return null;
     }
