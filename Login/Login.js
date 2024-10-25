@@ -25,7 +25,7 @@ loginForm.addEventListener("submit", async (event) => {
                 isUserLoggedIn: true
             };
             localStorage.setItem("taskManager", JSON.stringify(userCredentials));
-            window.location.href("../TaskManager/taskManager.html");
+            window.location.replace("../TaskManager/taskManager.html");
         }
     } catch (error) {
         alert("Error during login. Please try again.");

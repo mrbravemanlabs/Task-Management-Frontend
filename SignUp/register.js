@@ -23,9 +23,7 @@ registerForm.addEventListener("submit", async (event) => {
                 isUserLoggedIn: true
             };
             localStorage.setItem("taskManager", JSON.stringify(userCredentials));
-            const userData = JSON.parse(localStorage.getItem("taskManager"))
-            console.log(userData);
-            window.location.href("../Task Manager/taskManager.html");
+            window.location.replace("../Task Manager/taskManager.html");
         } else {
             alert("Registration failed. Please check your credentials.");
         }
