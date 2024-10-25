@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./logout.js" crossorigin="anonymous" defer></script>
+    <link rel="stylesheet" href="taskManager.css">
+    <script src="./taskManager.js" crossorigin="anonymous" defer></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>taskManager</title>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <img id="userAvatar" alt="userAvatar" >
+            <span class="userFullName"></span>
+        </div>
+        <span>The Task Manager</span>
+        <div class="buttons">
+            <a class="btn" href="../Add Task/addTask.html">Add Task</a>
+            <button class="logout-btn btn">Logout</button>
+        </div>
+    </nav>
+    <main>
+        <section class="pending">
+            <h1 class="heading">Pending Tasks</h1>
+            <div class="pending-tasks"></div>
+        </section>
+        <section class="active">
+            <h1 class="heading">Active Tasks</h1>
+            <div class="active-task"></div>
+        </section>
+        <section class="complete">
+            <h1 class="heading">Completed Tasks</h1>
+            <div class="completed-task"></div>
+        </section>
+    </main>
+</body>
+</html>

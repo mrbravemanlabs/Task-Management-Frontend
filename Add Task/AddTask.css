@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.4s ease;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    background: tomato;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Prevent body scroll */
+}
+
+.form {
+    width: 550px;
+    padding: 2rem;
+    background: #212121;
+    margin-top: 2rem;
+    max-height: 90vh; /* Max height to prevent form from exceeding screen */
+    overflow-y: auto; /* Enable scrolling for overflowing content */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 1rem;
+    position: relative;
+}
+
+form h1 {
+    color: tomato;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+form input {
+    height: 40px;
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 0 1rem;
+    background: #323232;
+    color: #fff;
+}
+
+form input:focus {
+    border-bottom: 2px solid tomato;
+    color: tomato;
+}
+
+form button {
+    height: 40px;
+    width: 100%;
+    outline: none;
+    border: none;
+    background: tomato;
+    color: #fff;
+    cursor: pointer;
+}
+
+.steps {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    max-height: 300px; /* Limit the height of the steps container */
+    overflow-y: scroll; /* Enable vertical scrolling */
+    padding-block: 50px;
+}
+
+form p {
+    color: tomato;
+    font-size: 2rem;
+}
+
+.step-wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.step-wrapper button {
+    width: 100px;
+}
+
+form .add-task-btn {
+    position: absolute;
+    bottom: 3rem;
+    right: 0;
+    width: 100px;
+    height: 40px;
+    background: tomato;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.steps input {
+    width: 100%;
+}
+.btn{
+    text-decoration: none;
+    padding: 8px 15px;
+    background: #fff;
+    color: orangered;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
