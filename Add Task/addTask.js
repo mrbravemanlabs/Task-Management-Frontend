@@ -71,7 +71,7 @@ addTaskForm.addEventListener("submit", async (event) => {
 
 async function submitTask(data) {
     try {
-        const url = `http://localhost:5000/api/v1/tasks/addTask`;
+        const url = `https://task-management-api-uaxo.onrender.com/api/v1/tasks/addTask`;
         const response = await fetch(url, {
             method: "POST",
             headers: {

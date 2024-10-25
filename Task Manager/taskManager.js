@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function getAllTasks(userId) {
-        const apiUrl = `http://localhost:5000/api/v1/tasks/getAllTasks/${userId}`;
+        const apiUrl = `https://task-management-api-uaxo.onrender.com/api/v1/tasks/getAllTasks/${userId}`;
         try {
             const response = await fetch(apiUrl);
             return response.ok ? await response.json() : null;
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function toggleStatus(taskId, taskStatus) {
         console.log(taskId);
-        const apiUrl = `http://localhost:5000/api/v1/tasks/toggleStatus/${taskId}`;
+        const apiUrl = `https://task-management-api-uaxo.onrender.com/api/v1/tasks/toggleStatus/${taskId}`;
         try {
             const response = await fetch(apiUrl, {
                 method: "PUT",
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function deleteTask(taskId) {
-        const apiUrl = `http://localhost:5000/api/v1/tasks/deleteTask/${taskId}`;
+        const apiUrl = `https://task-management-api-uaxo.onrender.com/api/v1/tasks/deleteTask/${taskId}`;
         try {
             const response = await fetch(apiUrl, { method: "DELETE" });
             const data = await response.json();
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function getTasksDetails(id) {
-        const apiUrl = `http://localhost:5000/api/v1/tasks/getTaskDetails/${id}`;
+        const apiUrl = `https://task-management-api-uaxo.onrender.com/api/v1/tasks/getTaskDetails/${id}`;
         try {
             const response = await fetch(apiUrl);
             if (!response.ok) {
@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function toggleStepsStatus(stepId) {
-        const apiUrl = `http://localhost:5000/api/v1/steps/toggleStatus/${stepId}`;
+        const apiUrl = `https://task-management-api-uaxo.onrender.com/api/v1/steps/toggleStatus/${stepId}`;
         try {
             const response = await fetch(apiUrl, {
                 method: 'PUT',

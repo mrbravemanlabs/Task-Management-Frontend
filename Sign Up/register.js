@@ -78,7 +78,7 @@ async function deleteImageFromCloudinary(publicId) {
     }
 }
 
-const apiUrl = "http://localhost:5000/api/v1/users/registerUser";
+const apiUrl = "https://task-management-api-uaxo.onrender.com/api/v1/users/registerUser";
 async function registerUser(userData) {
     try {
         const response = await fetch(apiUrl, {
