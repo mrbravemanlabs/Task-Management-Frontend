@@ -8,38 +8,26 @@ registerForm.addEventListener("submit", async (event) => {
     const password = event.target[2].value;
     const avatarImage = event.target[3].files[0];
 
-    if (!email) {
-        alert("Email is required");
-        return;
-    }
-    if (!password) {
-        alert("Password is required");
-        return;
-    }
-    if (!fullName) {
-        alert("Full name is required");
-        return;
-    }
-    if (!avatarImage) {
-        alert("Avatar is required");
+    if (!email || !password || !fullName || !avatarImage) {
+        alert("All fields are required");
         return;
     }
 
-    // Upload image to Cloudinary
     let fileUrl = await uploadImageToCloudinary(avatarImage);
-
-    // User data to be sent to the server
     const userData = { email, password, fullName, fileUrl };
 
     try {
         const user = await registerUser(userData);
+        console.log("User response:", user); // Log the user response
 
         if (user) {
             const userCredentials = {
                 userId: `${user.createdUser._id}`,
                 isUserLoggedIn: true
             };
+            console.log("Saving to localStorage:", userCredentials);
             localStorage.setItem("taskManager", JSON.stringify(userCredentials));
+            console.log("Redirecting to task manager...");
             window.location.replace("../Task Manager/taskManager.html");
         } else {
             alert("Registration failed. Please check your credentials.");
@@ -49,7 +37,6 @@ registerForm.addEventListener("submit", async (event) => {
     }
     registerForm.reset();
 });
-
 async function uploadImageToCloudinary(file) {
     const url = `https://api.cloudinary.com/v1_1/diyhkjyn2/upload`;
     const uploadPreset = "ml_default";
@@ -69,14 +56,6 @@ async function uploadImageToCloudinary(file) {
     }
 }
 
-async function deleteImageFromCloudinary(publicId) {
-    try {
-        const url = `https://api.cloudinary.com/v1_1/diyhkjyn2/destroy`;
-        // Add logic to delete the image using the publicId
-    } catch (error) {
-        alert("Error deleting image. Please try again.");
-    }
-}
 
 const apiUrl = "https://task-management-api-uaxo.onrender.com/api/v1/users/registerUser";
 async function registerUser(userData) {
@@ -89,12 +68,14 @@ async function registerUser(userData) {
             body: JSON.stringify(userData)
         });
         const data = await response.json();
+        console.log("Response data:", data); // Log the response data
         if (!data.userCreated) {
             alert(data.message);
-            return;
+            return null; // Return null if user not created
         }
-        return data;
+        return data; // Return the user data
     } catch (error) {
+        console.error("Fetch error:", error); // Log fetch error
         alert("Fetch error. Please try again.");
         return null;
     }
