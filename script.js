@@ -7,5 +7,5 @@
     window.location.replace("./Login/Login.html");
   } else {
     console.log("User data exists. No redirection.");
-    window.location.replace("./Task Manager/taskManager.html");
+    window.location.replace("./TaskManager/taskManager.html");
   }
