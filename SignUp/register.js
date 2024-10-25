@@ -16,14 +16,16 @@ registerForm.addEventListener("submit", async (event) => {
     const userData = { email, password, fullName, fileUrl };
     try {
         const user = await registerUser(userData);
-        console.log(user);
         if (user) {
+            console.log(user);
             const userCredentials = {
                 userId: `${user.createdUser._id}`,
                 isUserLoggedIn: true
             };
             localStorage.setItem("taskManager", JSON.stringify(userCredentials));
-            window.location.replace("../Task Manager/taskManager.html");
+            const userData = JSON.parse(localStorage.getItem("taskManager"))
+            console.log(userData);
+            window.location.href("../Task Manager/taskManager.html");
         } else {
             alert("Registration failed. Please check your credentials.");
         }
