@@ -24,9 +24,9 @@ registerForm.addEventListener("submit", async (event) => {
         email,
         password,
         fullName,
-        fileUrl: imageUploadResult.imageUrl // Access the imageUrl from the upload result
+        fileUrl: `${imageUploadResult.imageUrl}` // Access the imageUrl from the upload result
     };
-
+    console.log(userData);
     try {
         const user = await registerUser(userData);
         if (user) {
