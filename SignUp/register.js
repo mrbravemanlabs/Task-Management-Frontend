@@ -2,10 +2,10 @@ const registerForm = document.querySelector(".register-form");
 
 registerForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-
+    console.log(event.target);
     const fullName = event.target[0].value;
     const email = event.target[1].value;
-    const password = event.target[3].value;
+    const password = event.target[2].value;
     const avatarImage = event.target[4].files[0];
     const button = event.target[5]
 
@@ -19,6 +19,7 @@ registerForm.addEventListener("submit", async (event) => {
 
     // Wait for the image upload to complete
     let imageUploadResult = await uploadImageToCloudinary(avatarImage);
+    console.log(imageUploadResult);
     if (!imageUploadResult) {
         alert("Image upload failed.");
         return; // Exit if the image upload fails
@@ -29,8 +30,9 @@ registerForm.addEventListener("submit", async (event) => {
         password,
         fullName,
         fileUrl: `${imageUploadResult.imageUrl}`,
-        imagePublicId:imageUploadResult.public_id // Access the imageUrl from the upload result
+        imagePublicId:imageUploadResult.imagePublicId // Access the imageUrl from the upload result
     };
+    console.log(userData);
     try {
         const user = await registerUser(userData);
         if (user) {
