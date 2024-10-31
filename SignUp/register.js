@@ -5,13 +5,17 @@ registerForm.addEventListener("submit", async (event) => {
 
     const fullName = event.target[0].value;
     const email = event.target[1].value;
-    const password = event.target[2].value;
-    const avatarImage = event.target[3].files[0];
+    const password = event.target[3].value;
+    const avatarImage = event.target[4].files[0];
+    const button = event.target[5]
 
     if (!email || !password || !fullName || !avatarImage) {
         alert("All fields are required");
         return;
     }
+    button.disabled = true; // Disable the submit button to prevent multiple submissions
+    button.textContent = "Registering...";
+    button.style.backgroundColor = "red"; // Change the button color to indicate loading
 
     // Wait for the image upload to complete
     let imageUploadResult = await uploadImageToCloudinary(avatarImage);
@@ -24,12 +28,13 @@ registerForm.addEventListener("submit", async (event) => {
         email,
         password,
         fullName,
-        fileUrl: `${imageUploadResult.imageUrl}` // Access the imageUrl from the upload result
+        fileUrl: `${imageUploadResult.imageUrl}`,
+        imagePublicId:imageUploadResult.public_id // Access the imageUrl from the upload result
     };
-    console.log(userData);
     try {
         const user = await registerUser(userData);
         if (user) {
+            button.textContent = "Registered";
             console.log(user);
             const userCredentials = {
                 userId: user.createdUser._id, // Use _id directly, no need for string interpolation
@@ -39,10 +44,12 @@ registerForm.addEventListener("submit", async (event) => {
             window.location.replace("../Login/Login.html"); // Redirect to the login page
         } else {
             alert("Registration failed. Please check your credentials.");
+            button.textContent = "Failed To Register";
         }
     } catch (error) {
         console.error("Error during registration:", error); // Log the error for debugging
         alert("Error during registration. Please try again.");
+        button.textContent = "Failed To Register";
     }
     registerForm.reset();
 });
@@ -99,3 +106,13 @@ async function registerUser(userData) {
         return null; // Return null to indicate failure
     }
 }
+const showPassword = document.querySelector(".password-Show")
+const passwordInput = document.querySelector("#password");
+
+showPassword.addEventListener("click", () => {
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+});

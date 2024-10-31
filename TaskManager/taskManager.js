@@ -1,4 +1,11 @@
+const userData = JSON.parse(localStorage.getItem("taskManager")) || null;
+console.log(userData);
+if (!userData || !userData.isUserLoggedIn) {
+  console.log("Redirecting to login page...");
+  window.location.replace("./Login/Login.html");
+}
 const user = JSON.parse(localStorage.getItem("taskManager"));
+
 console.log(user);
 async function getUser(userId) {
     const apiUrl = `https://task-management-api-uaxo.onrender.com/api/v1/users/getUser/${userId}`;

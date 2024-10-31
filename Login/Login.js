@@ -5,6 +5,7 @@ loginForm.addEventListener("submit", async (event) => {
 
     const email = event.target[0].value;
     const password = event.target[1].value;
+    const button = event.target[3].value;
 
     if (!email) {
         alert("Email is required");
@@ -14,11 +15,16 @@ loginForm.addEventListener("submit", async (event) => {
         alert("Password is required");
         return;
     }
+    button.disabled = true;
+    button.textContent = "Logging In...";
+
 
     const userData = { email, password };
     try {
         const user = await loginUser(userData);
         console.log(user);
+        button.textContent = "Logged In";
+        button.backgroundColor = "green";
         if (user) {
             const userCredentials = {
                 userId: `${user.user._id}`,
@@ -28,6 +34,8 @@ loginForm.addEventListener("submit", async (event) => {
             window.location.replace("../TaskManager/taskManager.html");
         }
     } catch (error) {
+        button.textContent = "Failed To Login";
+        button.backgroundColor = "red";
         alert("Error during login. Please try again.");
     }
 });
@@ -53,3 +61,14 @@ async function loginUser(userData) {
         return null;
     }
 }
+
+const showPassword = document.querySelector(".password-Show")
+const passwordInput = document.querySelector("#password");
+
+showPassword.addEventListener("click", () => {
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+});
