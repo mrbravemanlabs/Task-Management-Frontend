@@ -2,59 +2,71 @@ const registerForm = document.querySelector(".register-form");
 
 registerForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    console.log(event.target);
     const fullName = event.target[0].value;
     const email = event.target[1].value;
     const password = event.target[2].value;
     const avatarImage = event.target[4].files[0];
-    const button = event.target[5]
+    const button = event.target[5];
 
+    // Validate form fields
     if (!email || !password || !fullName || !avatarImage) {
         alert("All fields are required");
         return;
     }
-    button.disabled = true; // Disable the submit button to prevent multiple submissions
-    button.textContent = "Registering...";
-    button.style.backgroundColor = "red"; // Change the button color to indicate loading
 
-    // Wait for the image upload to complete
+    // Update button state
+    button.disabled = true;
+    button.textContent = "Registering...";
+    button.style.backgroundColor = "red";
+
+    // Upload avatar image
     let imageUploadResult = await uploadImageToCloudinary(avatarImage);
-    console.log(imageUploadResult);
     if (!imageUploadResult) {
         alert("Image upload failed.");
-        return; // Exit if the image upload fails
+        resetButtonState(button);
+        return;
     }
 
+    // Create user data object
     const userData = {
         email,
         password,
         fullName,
-        fileUrl: `${imageUploadResult.imageUrl}`,
-        imagePublicId:imageUploadResult.imagePublicId // Access the imageUrl from the upload result
+        fileUrl: imageUploadResult.imageUrl,
+        imagePublicId: imageUploadResult.imagePublicId,
     };
-    console.log(userData);
+
     try {
+        // Register user
         const user = await registerUser(userData);
         if (user) {
             button.textContent = "Registered";
-            console.log(user);
             const userCredentials = {
-                userId: user.createdUser._id, // Use _id directly, no need for string interpolation
-                isUserLoggedIn: true
+                userId: user.createdUser._id,
+                isUserLoggedIn: true,
             };
             localStorage.setItem("taskManager", JSON.stringify(userCredentials));
-            window.location.replace("../Login/Login.html"); // Redirect to the login page
+            window.location.replace("../Login/Login.html");
         } else {
             alert("Registration failed. Please check your credentials.");
-            button.textContent = "Failed To Register";
+            resetButtonState(button);
         }
     } catch (error) {
-        console.error("Error during registration:", error); // Log the error for debugging
+        console.error("Error during registration:", error);
         alert("Error during registration. Please try again.");
-        button.textContent = "Failed To Register";
+        resetButtonState(button);
     }
+
+    // Reset form after successful or unsuccessful registration
     registerForm.reset();
 });
+
+// Helper function to reset button state
+function resetButtonState(button) {
+    button.disabled = false;
+    button.textContent = "Register";
+    button.style.backgroundColor = ""; // Revert to the default color
+}
 
 async function uploadImageToCloudinary(file) {
     const url = `https://api.cloudinary.com/v1_1/diyhkjyn2/upload`;
@@ -62,23 +74,21 @@ async function uploadImageToCloudinary(file) {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", uploadPreset);
-    
+
     try {
         const response = await fetch(url, {
             method: "POST",
-            body: formData
+            body: formData,
         });
         const data = await response.json();
-        
-        // Check if the response has the secure_url
+
         if (!data.secure_url) {
             alert("Image upload failed. Please try again.");
-            return null; // Return null if upload failed
+            return null;
         }
-        
         return { imageUrl: data.secure_url, imagePublicId: data.public_id };
     } catch (error) {
-        console.error("Error uploading image:", error); // Log the error for debugging
+        console.error("Error uploading image:", error);
         alert("Error uploading image. Please try again.");
         return null;
     }
@@ -90,31 +100,27 @@ async function registerUser(userData) {
         const response = await fetch(apiUrl, {
             method: "POST",
             headers: {
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
             },
-            body: JSON.stringify(userData)
+            body: JSON.stringify(userData),
         });
-        
+
         const data = await response.json();
-        
-        if (!data.userCreated) {
-            alert(data.message); // Show alert if user was not created
-            return null; // Return null to indicate failure
+        if (!data?.userCreated) {
+            alert(data.message || "User registration failed.");
+            return null;
         }
-        return data; // Return the user data if created successfully
+        return data;
     } catch (error) {
-        console.error("Fetch error:", error); // Log the error for debugging
+        console.error("Fetch error:", error);
         alert("Fetch error. Please try again.");
-        return null; // Return null to indicate failure
+        return null;
     }
 }
-const showPassword = document.querySelector(".password-Show")
+
+const showPassword = document.querySelector(".password-Show");
 const passwordInput = document.querySelector("#password");
 
 showPassword.addEventListener("click", () => {
-    if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-    } else {
-        passwordInput.type = "password";
-    }
+    passwordInput.type = passwordInput.type === "password" ? "text" : "password";
 });
