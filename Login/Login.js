@@ -5,7 +5,7 @@ loginForm.addEventListener("submit", async (event) => {
 
     const email = event.target[0].value;
     const password = event.target[1].value;
-    const button = event.target[3].value;
+    const button = event.target[3];
 
     if (!email) {
         alert("Email is required");
