@@ -42,7 +42,7 @@ registerForm.addEventListener("submit", async (event) => {
         if (user) {
             button.textContent = "Registered";
             const userCredentials = {
-                userId: user.createdUser._id,
+                userId: user.user._id,
                 isUserLoggedIn: true,
             };
             localStorage.setItem("taskManager", JSON.stringify(userCredentials));
