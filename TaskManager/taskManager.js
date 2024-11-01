@@ -8,8 +8,8 @@ const user = JSON.parse(localStorage.getItem("taskManager"));
 
 console.log(user);
 async function getUser(userId) {
-    // const apiUrl = `https://task-management-api-uaxo.onrender.com/api/v1/users/getUser/${userId}`;
-    const apiUrl = `http://localhost:5000/api/v1/users/getUser/${userId}`;
+    const apiUrl = `https://task-management-api-uaxo.onrender.com/api/v1/users/getUser/${userId}`;
+    // const apiUrl = `http://localhost:5000/api/v1/users/getUser/${userId}`;
     try {
         const response = await fetch(apiUrl);
         return response.ok ? await response.json() : null;
@@ -20,8 +20,8 @@ async function getUser(userId) {
 }
 
 async function getAllTasks(userId) {
-    // const apiUrl = `https://task-management-api-uaxo.onrender.com/api/v1/tasks/getAllTasks/${userId}`;
-    const apiUrl = `http://localhost:5000/api/v1/tasks/getAllTasks/${userId}`;
+    const apiUrl = `https://task-management-api-uaxo.onrender.com/api/v1/tasks/getAllTasks/${userId}`;
+    // const apiUrl = `http://localhost:5000/api/v1/tasks/getAllTasks/${userId}`;
     try {
         const response = await fetch(apiUrl);
         return response.ok? await response.json() : null;
@@ -29,13 +29,6 @@ async function getAllTasks(userId) {
         console.error("Fetch error:", error);
         return null;
     }
-    // try {
-    //     const response = await fetch(apiUrl);
-    //     return response.ok ? await response.json() : null;
-    // } catch (error) {
-    //     console.error("Fetch error:", error);
-    //     return null;
-    // }
 }
 
 async function getUserDetails() {
@@ -113,8 +106,8 @@ function showUser(user) {
 }
 
 async function toggleStatus(taskId, taskStatus) {
-    // const apiUrl = `https://task-management-api-uaxo.onrender.com/api/v1/tasks/toggleStatus/${taskId}`;
-    const apiUrl = `http://localhost:5000/api/v1/tasks/toggleStatus/${taskId}`;
+    const apiUrl = `https://task-management-api-uaxo.onrender.com/api/v1/tasks/toggleStatus/${taskId}`;
+    // const apiUrl = `http://localhost:5000/api/v1/tasks/toggleStatus/${taskId}`;
     try {
         const response = await fetch(apiUrl, {
             method: "PUT",
@@ -136,7 +129,7 @@ async function toggleStatus(taskId, taskStatus) {
 }
 
 async function deleteTask(taskId) {
-    // const apiUrl = `https://task-management-api-uaxo.onrender.com/api/v1/tasks/deleteTask/${taskId}`;
+    const apiUrl = `https://task-management-api-uaxo.onrender.com/api/v1/tasks/deleteTask/${taskId}`;
     try {
         const response = await fetch(apiUrl, { method: "DELETE" });
         const data = await response.json();

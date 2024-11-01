@@ -94,8 +94,8 @@ async function uploadImageToCloudinary(file) {
     }
 }
 
-const apiUrl = "https://task-management-api-uaxo.onrender.com/api/v1/users/registerUser";
 async function registerUser(userData) {
+    const apiUrl = "https://task-management-api-uaxo.onrender.com/api/v1/users/registerUser";
     try {
         const response = await fetch(apiUrl, {
             method: "POST",

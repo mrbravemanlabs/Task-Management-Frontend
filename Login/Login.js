@@ -40,9 +40,9 @@ loginForm.addEventListener("submit", async (event) => {
     }
 });
 
-// const apiUrl = "https://task-management-api-uaxo.onrender.com/api/v1/users/loginUser";
-const apiUrl = "http://localhost:5000/api/v1/users/loginUser"
+// const apiUrl = "http://localhost:5000/api/v1/users/loginUser"
 async function loginUser(userData) {
+    const apiUrl = "https://task-management-api-uaxo.onrender.com/api/v1/users/loginUser";
     try {
         const response = await fetch(apiUrl, {
             method: "POST",
